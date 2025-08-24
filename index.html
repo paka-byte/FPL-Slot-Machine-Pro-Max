@@ -3,126 +3,77 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#0a7e6e" />
 <title>FPL Slot Machine — Pro Max (DataFPL)</title>
 <style>
-  :root{
-    --bg1:#0b2f24; --bg2:#0a7e6e; --panel:#102c26;
-    --glass:rgba(255,255,255,.06);
-    --ring:rgba(0,0,0,.25);
+  :root {
+    --bg1:#0b2f24; --bg2:#0a7e6e;
     --accent:#00ff88; --danger:#ff4444; --text:#eafcf3;
   }
-  *{box-sizing:border-box}
-  html,body{height:100%}
+  *{box-sizing:border-box;margin:0;padding:0}
   body{
-    margin:0;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,'Trebuchet MS',sans-serif;
     color:var(--text);
-    background:
-      radial-gradient(1200px 800px at 0% 0%, rgba(255,255,255,.05), transparent 60%),
-      radial-gradient(1200px 800px at 100% 0%, rgba(255,255,255,.05), transparent 60%),
-      linear-gradient(135deg, var(--bg1), var(--bg2));
-    display:flex; flex-direction:column; align-items:center;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;
   }
-
   h1{
-    margin:18px 12px 4px;
-    font-size:clamp(1.6rem,3.5vw,2.6rem);
-    letter-spacing:.5px;
-    text-shadow:0 2px 8px rgba(0,0,0,.45);
+    margin:20px 12px 6px;text-align:center;
+    font-size:clamp(1.6rem,3.8vw,2.6rem);
+    text-shadow:0 2px 8px rgba(0,0,0,.45)
   }
-  .sub{
-    opacity:.9; margin-bottom:10px; font-size:.95rem;
-    background:var(--glass); padding:6px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.08)
-  }
-
-  .wrap{width:min(1000px,100%); padding:8px 14px 18px}
-
-  .controls{
-    display:grid; grid-template-columns:1.1fr .9fr; gap:14px; margin-top:10px
-  }
-  @media (max-width:880px){ .controls{ grid-template-columns:1fr; } }
+  .sub{opacity:.9;margin-bottom:12px;font-size:.95rem;padding:6px 12px;
+    background:rgba(255,255,255,.08);border-radius:12px}
+  .wrap{width:min(960px,100%);padding:0 14px 18px}
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+  @media(max-width:820px){.controls{grid-template-columns:1fr}}
   .control-card{
-    background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:16px; padding:14px 12px;
-    box-shadow:0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
-    backdrop-filter: blur(6px);
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+    border-radius:14px;padding:14px;box-shadow:0 8px 20px rgba(0,0,0,.25);
+    backdrop-filter:blur(6px)
   }
-  .control-card h3{margin:0 0 10px; font-size:1rem; opacity:.95; letter-spacing:.3px}
-
-  .input-container{
-    display:grid; grid-template-columns:repeat(3,minmax(120px,1fr)); gap:10px
-  }
-  @media (max-width:560px){ .input-container{ grid-template-columns:repeat(2,minmax(120px,1fr)); } }
+  .control-card h3{margin-bottom:10px;font-size:1rem;opacity:.95}
+  .input-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
   .input-container input{
-    padding:12px 10px; font-size:16px; text-align:center; color:#0b0b0b;
-    border:none; outline:none; border-radius:12px; background:#fff;
-    box-shadow:inset 0 -2px 0 rgba(0,0,0,.15);
+    padding:10px;border:none;border-radius:10px;
+    background:#fff;color:#111;font-size:15px;text-align:center;
+    box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)
   }
-  .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px}
-
+  .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
   select,.stat,.small-btn{
-    padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.12);
-    font-size:15px; background:rgba(255,255,255,.9); color:#0b0b0b; font-weight:700
+    padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.15);
+    font-weight:600
   }
-  .stat{
-    background:#0e2f26; color:#eafcf3; border-color:rgba(255,255,255,.14);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
-    min-width:140px
-  }
-  .small-btn{ background:#122a24; color:#eafcf3; cursor:pointer }
-  .small-btn:hover{ filter:brightness(1.15) }
-
-  .reels{display:flex; justify-content:center; margin:22px 0 12px; gap:16px; width:100%}
+  select{background:#fff;color:#111}
+  .stat{background:#0e2f26;color:#eafcf3;min-width:110px;text-align:center}
+  .small-btn{background:#18352e;color:#fff;cursor:pointer}
+  .small-btn:hover{filter:brightness(1.15)}
+  .reels{display:flex;justify-content:center;gap:16px;margin:22px 0}
   .reel{
-    width:clamp(110px,22vw,160px); height:clamp(110px,22vw,160px);
-    background:#fff; color:#111; border-radius:16px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:clamp(18px,3.6vw,28px); font-weight:900; padding:10px; text-align:center;
-    box-shadow:
-      0 12px 30px rgba(0,0,0,.35),
-      inset 0 4px 0 rgba(255,255,255,.9),
-      inset 0 -4px 0 rgba(0,0,0,.08);
-    transform:translateZ(0);
+    width:clamp(100px,22vw,140px);height:clamp(100px,22vw,140px);
+    background:#fff;color:#111;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:14px;font-size:clamp(18px,3.6vw,28px);
+    box-shadow:0 10px 25px rgba(0,0,0,.35)
   }
-  .reel.stop-anim{ animation:pop .28s ease-out }
-  @keyframes pop{ 0%{transform:scale(.96)} 70%{transform:scale(1.04)} 100%{transform:scale(1)} }
-
-  .btns{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:8px 0 0}
-  button{
-    padding:12px 18px; font-size:17px; border:none; border-radius:12px; cursor:pointer; font-weight:900;
-    box-shadow:0 8px 18px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.18);
-    transition:transform .08s ease, filter .15s ease
-  }
-  button:active{ transform:translateY(1px) }
-  #spinBtn{ background:var(--accent); color:#001b0e }
-  #resetBtn{ background:var(--danger); color:#fff; display:none }
-  #muteBtn{ background:#182a25; color:#fff }
-  #saveBtn{ background:#0b0b0b; color:#fff; border:1px solid rgba(255,255,255,.18) }
-
-  #result{
-    margin:12px 12px 8px; font-size:clamp(20px,3.8vw,30px); font-weight:900; min-height:42px;
-    text-shadow:0 2px 8px rgba(0,0,0,.45); text-align:center; word-break:break-word
-  }
-  #history{font-size:.95rem; opacity:.95; display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
-  .chip{
-    background:#083228; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12);
-    box-shadow:0 4px 12px rgba(0,0,0,.25)
-  }
-
-  canvas{ position:fixed; inset:0; pointer-events:none; z-index:9999 }
-
-  footer{ margin-top:auto; opacity:.8; padding:12px 0 18px; font-size:.9rem }
+  .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+  button{padding:12px 18px;font-size:16px;font-weight:700;border:none;border-radius:12px;cursor:pointer}
+  #spinBtn{background:var(--accent);color:#001b0e}
+  #resetBtn{background:var(--danger);color:#fff;display:none}
+  #muteBtn{background:#222;color:#fff}
+  #saveBtn{background:#0b0b0b;color:#fff}
+  #result{margin:12px 0;font-size:clamp(20px,3.8vw,30px);font-weight:800;text-align:center;min-height:40px}
+  #history{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
+  .chip{background:#083228;padding:6px 10px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+  canvas{position:fixed;inset:0;pointer-events:none;z-index:999}
+  footer{margin-top:auto;opacity:.8;padding:12px 0;font-size:.9rem}
 </style>
-
 <link rel="preload" href="./sounds/spin.mp3" as="audio">
 <link rel="preload" href="./sounds/tick.mp3" as="audio">
 <link rel="preload" href="./sounds/goal.mp3" as="audio">
 </head>
 <body>
   <h1>🎰 FPL Slot Machine — Pro Max (DataFPL)</h1>
-  <div class="sub">Weighted jackpot: starts <b>20%</b>, +<b>10%</b> each miss, resets to 20% on hit (just for fun)</div>
+  <div class="sub">Weighted jackpot: starts <b>20%</b>, +<b>10%</b> each miss, resets to 20% on hit</div>
 
   <div class="wrap">
     <div class="controls">
@@ -130,16 +81,15 @@
         <h3>Players</h3>
         <div class="input-container" id="inputs"></div>
         <div class="row">
-          <button id="addSlotBtn" class="small-btn" type="button">＋ เพิ่มช่อง</button>
-          <button id="removeSlotBtn" class="small-btn" type="button">－ ลดช่อง</button>
+          <button id="addSlotBtn" class="small-btn">＋ เพิ่มช่อง</button>
+          <button id="removeSlotBtn" class="small-btn">－ ลดช่อง</button>
         </div>
-        <div style="opacity:.75;font-size:.9rem;margin-top:6px">Tip: กด Enter เพื่อบันทึกชื่อ (ระบบจะจำค่าไว้ในเครื่อง)</div>
+        <div style="opacity:.8;font-size:.85rem;margin-top:8px">Tip: กด Enter เพื่อบันทึกชื่อ (ระบบจะจำค่าไว้ในเครื่อง)</div>
       </div>
-
       <div class="control-card">
         <h3>Theme & Stats</h3>
         <div class="row">
-          <select id="themeSelect" title="Theme">
+          <select id="themeSelect">
             <option value="Default">Default (Green)</option>
             <option value="Arsenal">Arsenal</option>
             <option value="Liverpool">Liverpool</option>
@@ -165,11 +115,11 @@
     <div class="btns">
       <button id="spinBtn">SPIN!</button>
       <button id="resetBtn">Play Again</button>
-      <button id="muteBtn" aria-pressed="false">🔊 Sound On</button>
-      <button id="saveBtn" title="Save current result as an image">💾 Save</button>
+      <button id="muteBtn">🔊 Sound On</button>
+      <button id="saveBtn">💾 Save</button>
     </div>
 
-    <div id="result" role="status" aria-live="polite"></div>
+    <div id="result"></div>
     <div id="history"></div>
   </div>
 
@@ -177,282 +127,60 @@
 
 <script>
 (() => {
-  const LS_KEY = "fplslot_pro_random_v4";
-  const themes = {
-    Default:{bg1:"#0b2f24", bg2:"#0a7e6e", accent:"#00ff88"},
-    Arsenal:{bg1:"#8a0303", bg2:"#ff4d4d", accent:"#ffd700"},
-    Liverpool:{bg1:"#008a5a", bg2:"#d00027", accent:"#ffd700"},
-    ManCity:{bg1:"#6ca6d9", bg2:"#1b4f72", accent:"#f5f5f5"},
-    Spurs:{bg1:"#0c2340", bg2:"#1f4b99", accent:"#f0eaea"},
-    Chelsea:{bg1:"#001489", bg2:"#0d3685", accent:"#ffd700"},
-    ManUnited:{bg1:"#da291c", bg2:"#111111", accent:"#ffd100"},
-  };
+  const LS_KEY="fplslot_v5";
+  const MIN_SLOTS=3, MAX_SLOTS=12;
+  let state={spinCount:0,jackpots:0,names:["Salah","Haaland","Saka","Ekitike","Bruno","Palmer"],theme:"Default",history:[],jackpotChance:0.2};
 
-  const MIN_SLOTS = 3, MAX_SLOTS = 12;
+  const reels=[document.getElementById("reel1"),document.getElementById("reel2"),document.getElementById("reel3")];
+  const inputsWrap=document.getElementById("inputs");
+  const themeSelect=document.getElementById("themeSelect");
+  const statSpins=document.getElementById("statSpins"),statJackpots=document.getElementById("statJackpots"),statRate=document.getElementById("statRate"),statChance=document.getElementById("statChance");
+  const resultDiv=document.getElementById("result"),historyDiv=document.getElementById("history");
+  const spinBtn=document.getElementById("spinBtn"),resetBtn=document.getElementById("resetBtn"),muteBtn=document.getElementById("muteBtn");
 
-  let state = {
-    spinCount: 0, jackpots: 0,
-    names: ["Salah","Haaland","Saka","Ekitike","Bruno","Palmer"],
-    theme: "Default", history: [],
-    jackpotChance: 0.2
-  };
+  // AUDIO (short)
+  const spinMusic=new Audio('./sounds/spin.mp3');
+  const tickSound=new Audio('./sounds/tick.mp3');
+  const jackpotSound=new Audio('./sounds/goal.mp3');
+  [spinMusic,tickSound,jackpotSound].forEach(a=>{a.playsInline=true;a.preload='auto';});
+  function playTick(){if(muted)return;const s=tickSound.cloneNode(true);s.volume=0.25;s.play().catch(()=>{});setTimeout(()=>{try{s.pause()}catch(e){}},120);}
+  function playSpin(){if(muted)return;try{spinMusic.currentTime=0;spinMusic.play().catch(()=>{});setTimeout(()=>{try{spinMusic.pause()}catch(e){}},1600);}catch(e){}}
+  function playJackpot(){if(muted)return;try{jackpotSound.currentTime=0;jackpotSound.play().catch(()=>{});setTimeout(()=>{try{jackpotSound.pause()}catch(e){}},1200);}catch(e){}}
 
-  const reels = [document.getElementById("reel1"), ("reel2"), ("reel3")].map(id => typeof id === 'string' ? document.getElementById(id) : id);
-  const inputsWrap = document.getElementById("inputs");
-  const themeSelect = document.getElementById("themeSelect");
-  const statSpins = document.getElementById("statSpins");
-  const statJackpots = document.getElementById("statJackpots");
-  const statRate = document.getElementById("statRate");
-  const statChance = document.getElementById("statChance");
-  const resultDiv = document.getElementById("result");
-  const historyDiv = document.getElementById("history");
-  const spinBtn = document.getElementById("spinBtn");
-  const resetBtn = document.getElementById("resetBtn");
-  const muteBtn = document.getElementById("muteBtn");
-  const saveBtn = document.getElementById("saveBtn");
-  const addSlotBtn = document.getElementById("addSlotBtn");
-  const removeSlotBtn = document.getElementById("removeSlotBtn");
+  let muted=false;function setMuted(on){muted=on;[spinMusic,tickSound,jackpotSound].forEach(a=>a.muted=on);muteBtn.textContent=muted?"🔇 Sound Off":"🔊 Sound On";}
+  muteBtn.onclick=()=>setMuted(!muted);
 
-  // AUDIO (shortened by code)
-  const spinMusic = new Audio('./sounds/spin.mp3');
-  const tickSound = new Audio('./sounds/tick.mp3');
-  const jackpotSound = new Audio('./sounds/goal.mp3');
-  spinMusic.volume = 0.55; tickSound.volume = 0.22; jackpotSound.volume = 0.9;
-  [spinMusic, tickSound, jackpotSound].forEach(a => { a.playsInline = true; a.preload='auto'; });
+  function renderInputs(){inputsWrap.innerHTML="";state.names.forEach((n,i)=>{const inp=document.createElement("input");inp.value=n||"";inp.placeholder=`Player ${i+1}`;inp.onchange=saveNames;inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();saveNames();inp.blur()}};inputsWrap.appendChild(inp);});}
+  function saveNames(){state.names=[...inputsWrap.querySelectorAll("input")].map(i=>(i.value||"").trim());saveState();}
+  function getFaces(){const arr=[...inputsWrap.querySelectorAll("input")].map(i=>(i.value||"").trim()).filter(Boolean);return arr.length?arr:["?","?","?","?","?","?"];}
 
-  // kill any audio quickly
-  function stopAllAudio(){
-    try{ spinMusic.pause(); }catch(e){}
-    try{ jackpotSound.pause(); }catch(e){}
-    // tick clones are auto-removed after paused by timeout below
-  }
+  document.getElementById("addSlotBtn").onclick=()=>{if(state.names.length>=MAX_SLOTS)return;state.names.push("");saveState();renderInputs();};
+  document.getElementById("removeSlotBtn").onclick=()=>{if(state.names.length<=MIN_SLOTS)return;state.names.pop();saveState();renderInputs();};
 
-  // mobile unlock
-  function unlockAudio(){
-    [spinMusic, tickSound, jackpotSound].forEach(a => {
-      const p = a.play(); if (p && p.then) p.then(()=>a.pause()).catch(()=>{});
-    });
-    document.removeEventListener('pointerdown', unlockAudio);
-  }
-  document.addEventListener('pointerdown', unlockAudio, { once:true });
+  // confetti
+  const canvas=document.getElementById("confetti"),ctx=canvas.getContext("2d");
+  function resizeCanvas(){canvas.width=innerWidth;canvas.height=innerHeight;}
+  resizeCanvas();addEventListener("resize",resizeCanvas);
+  let fxToken=0;function clearEffects(){fxToken++;ctx.clearRect(0,0,canvas.width,canvas.height);}
+  function makeConfetti(){resizeCanvas();const myToken=++fxToken,particles=[];for(let i=0;i<200;i++)particles.push({x:Math.random()*canvas.width,y:-20-Math.random()*canvas.height,r:Math.random()*4+2,color:`hsl(${Math.random()*360},100%,50%)`,vy:2+Math.random()*2,vx:-1+Math.random()*2});const start=performance.now();function draw(now){if(myToken!==fxToken)return;const elapsed=now-start;ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;ctx.beginPath();ctx.fillStyle=p.color;ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();});if(elapsed<4000)requestAnimationFrame(draw);}requestAnimationFrame(draw);}
+  function makeFirework(){resizeCanvas();const myToken=++fxToken,x=Math.random()*canvas.width,y=Math.random()*canvas.height/2,ps=[];for(let i=0;i<60;i++){const a=(i/60)*Math.PI*2,s=1+Math.random()*5.5;ps.push({x,y,r:2,dx:Math.cos(a)*s,dy:Math.sin(a)*s,color:`hsl(${Math.random()*360},100%,50%)`});}const start=performance.now();function anim(now){if(myToken!==fxToken)return;const t=now-start;ctx.clearRect(0,0,canvas.width,canvas.height);ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;p.r*=0.97;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(.2,p.r),0,Math.PI*2);ctx.fillStyle=p.color;ctx.fill();});if(t<900)requestAnimationFrame(anim);}requestAnimationFrame(anim);}
 
-  // shortened players
-  function playTick(){
-    if (muted) return;
-    const s = tickSound.cloneNode(true);
-    s.volume = tickSound.volume;
-    s.play().catch(()=>{});
-    setTimeout(()=>{ try{s.pause();}catch(e){} s.remove(); }, 120); // ~0.12s
-  }
-  function playSpin(){
-    if (muted) return;
-    try{
-      spinMusic.currentTime = 0;
-      spinMusic.play().catch(()=>{});
-      setTimeout(()=>{ try{spinMusic.pause();}catch(e){} }, 1600); // ~1.6s
-    }catch(e){}
-  }
-  function playJackpot(){
-    if (muted) return;
-    try{
-      jackpotSound.currentTime = 0;
-      jackpotSound.play().catch(()=>{});
-      setTimeout(()=>{ try{jackpotSound.pause();}catch(e){} }, 1200); // ~1.2s
-    }catch(e){}
-  }
+  function refreshStats(){statSpins.textContent="Spins: "+state.spinCount;statJackpots.textContent="Jackpots: "+state.jackpots;statRate.textContent="Rate: "+(state.spinCount?((state.jackpots/state.spinCount)*100).toFixed(1):"0")+"%";statChance.textContent="Chance: "+Math.round((state.jackpotChance||0.2)*100)+"%";historyDiv.innerHTML="";state.history.slice(-8).reverse().forEach(h=>{const c=document.createElement("div");c.className="chip";c.textContent=h.text;historyDiv.appendChild(c);});}
+  function saveState(){localStorage.setItem(LS_KEY,JSON.stringify(state));}
+  function loadState(){try{const raw=localStorage.getItem(LS_KEY);if(raw)Object.assign(state,JSON.parse(raw));}catch(e){}}
 
-  let spinning = false, muted = false;
-  function setMuted(on){
-    muted = on;
-    [spinMusic, tickSound, jackpotSound].forEach(a => a.muted = on);
-    muteBtn.textContent = muted ? "🔇 Sound Off" : "🔊 Sound On";
-    muteBtn.setAttribute("aria-pressed", muted ? "true" : "false");
-  }
-  muteBtn.addEventListener("click", () => setMuted(!muted));
+  let spinning=false;
+  function spin(){if(spinning)return;spinning=true;state.spinCount++;saveState();refreshStats();const faces=getFaces();const roll=Math.random();const isJackpot=roll<(state.jackpotChance??0.2);state.jackpotChance=isJackpot?0.2:Math.min((state.jackpotChance??0.2)+0.1,1.0);saveState();refreshStats();const jackpotSymbol=faces[Math.floor(Math.random()*faces.length)],durations=[1700,2500,3300];if(!muted)playSpin();const start=performance.now(),starts=[start,start,start],done=[false,false,false];function updateReel(i,now){const elapsed=now-starts[i];if(elapsed<durations[i]){const rand=Math.floor(Math.random()*faces.length);reels[i].textContent=faces[rand];if(!muted&&elapsed-(reels[i]._lastTick||0)>110){playTick();reels[i]._lastTick=elapsed;}}else if(!done[i]){reels[i].textContent=isJackpot?jackpotSymbol:faces[Math.floor(Math.random()*faces.length)];done[i]=true;}}function loop(now){updateReel(0,now);updateReel(1,now);updateReel(2,now);if(done.every(Boolean))endSpin(isJackpot,jackpotSymbol);else requestAnimationFrame(loop);}requestAnimationFrame(loop);spinBtn.disabled=true;resetBtn.style.display="none";}
+  function endSpin(isJackpot,symbol){let text;if(isJackpot){state.jackpots++;saveState();refreshStats();text="🎉 YOUR CAPTAIN IS ... "+symbol+" 🎉";makeConfetti();for(let i=0;i<4;i++)setTimeout(makeFirework,i*600);if(!muted)playJackpot();}else{text=reels.map(r=>r.textContent).join(" | ");}resultDiv.textContent=text;state.history.push({ts:Date.now(),text});if(state.history.length>24)state.history.shift();saveState();refreshStats();spinBtn.disabled=false;resetBtn.style.display="inline-block";spinning=false;}
+  function resetGame(){resultDiv.textContent="";reels.forEach(r=>r.textContent="?");resetBtn.style.display="none";clearEffects();}
 
-  // theme
-  function applyTheme(name){
-    const th = themes[name] || themes.Default;
-    document.documentElement.style.setProperty("--bg1", th.bg1);
-    document.documentElement.style.setProperty("--bg2", th.bg2);
-    document.documentElement.style.setProperty("--accent", th.accent);
-    state.theme = name; saveState();
-  }
-  themeSelect.addEventListener("change", e => applyTheme(e.target.value));
+  // init
+  loadState();if(!Array.isArray(state.names)||state.names.length===0)state.names=["Salah","Haaland","Saka","Ekitike","Bruno","Palmer"];renderInputs();refreshStats();
 
-  // state
-  function loadState(){ try{ const raw=localStorage.getItem(LS_KEY); if(raw) Object.assign(state, JSON.parse(raw)); }catch(e){} }
-  function saveState(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
-
-  // inputs
-  function renderInputs(){
-    inputsWrap.innerHTML = "";
-    state.names.forEach((name, idx) => {
-      const input = document.createElement('input');
-      input.value = name || '';
-      input.placeholder = `Player ${idx+1}`;
-      input.addEventListener('change', saveNames);
-      input.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); saveNames(); input.blur(); }});
-      inputsWrap.appendChild(input);
-    });
-  }
-  function saveNames(){ state.names = [...inputsWrap.querySelectorAll('input')].map(i => (i.value||'').trim()); saveState(); }
-  function getFaces(){ const arr = [...inputsWrap.querySelectorAll('input')].map(i => (i.value||'').trim()).filter(Boolean); return arr.length?arr:["?","?","?","?","?","?"]; }
-
-  const MIN_SLOTS = 3, MAX_SLOTS = 12;
-  addSlotBtn.addEventListener('click', () => { if (state.names.length>=MAX_SLOTS) return; state.names.push(""); saveState(); renderInputs(); });
-  removeSlotBtn.addEventListener('click', () => { if (state.names.length<=MIN_SLOTS) return; state.names.pop(); saveState(); renderInputs(); });
-
-  // canvas effects (with killswitch) + clear on reset
-  const canvas = document.getElementById("confetti");
-  const ctx = canvas.getContext("2d");
-  function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  resizeCanvas(); window.addEventListener("resize", resizeCanvas);
-
-  let fxToken = 0;
-  function clearEffects(){ fxToken++; ctx.clearRect(0,0,canvas.width,canvas.height); }
-
-  function makeConfetti() {
-    resizeCanvas();
-    const myToken = ++fxToken;
-    const particles = [];
-    for (let i=0;i<200;i++){
-      particles.push({ x:Math.random()*canvas.width, y:-20-Math.random()*canvas.height, r:Math.random()*4+2,
-        color:`hsl(${Math.random()*360},100%,50%)`, vy:2+Math.random()*2, vx:-1+Math.random()*2 });
-    }
-    const start = performance.now();
-    function draw(now){
-      if (myToken !== fxToken) return;
-      const elapsed = now - start;
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      particles.forEach(p=>{ p.x += p.vx; p.y += p.vy; ctx.beginPath(); ctx.fillStyle=p.color; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); });
-      if (elapsed < 4000) requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
-  }
-  function makeFirework(){
-    resizeCanvas();
-    const myToken = ++fxToken;
-    const x = Math.random()*canvas.width, y = Math.random()*canvas.height/2;
-    const ps = [];
-    for(let i=0;i<60;i++){
-      const a=(i/60)*Math.PI*2, s=1+Math.random()*5.5;
-      ps.push({ x,y, r:2, dx:Math.cos(a)*s, dy:Math.sin(a)*s, color:`hsl(${Math.random()*360},100%,50%)` });
-    }
-    const start = performance.now();
-    function anim(now){
-      if (myToken !== fxToken) return;
-      const t = now - start;
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ps.forEach(p=>{ p.x+=p.dx; p.y+=p.dy; p.r*=0.97; ctx.beginPath(); ctx.arc(p.x,p.y,Math.max(0.2,p.r),0,Math.PI*2); ctx.fillStyle=p.color; ctx.fill(); });
-      if (t<900) requestAnimationFrame(anim);
-    }
-    requestAnimationFrame(anim);
-  }
-
-  function spin(){
-    if (spinning) return;
-    spinning = true;
-    state.spinCount++; saveState(); refreshStats();
-
-    const faces = getFaces();
-    const roll = Math.random();
-    const isJackpot = roll < (state.jackpotChance ?? 0.2);
-    state.jackpotChance = isJackpot ? 0.2 : Math.min((state.jackpotChance ?? 0.2)+0.1, 1.0);
-    saveState(); refreshStats();
-
-    const jackpotSymbol = faces[Math.floor(Math.random()*faces.length)];
-    const durations = [1700, 2500, 3300];
-
-    if (!muted) playSpin();
-
-    const start = performance.now(), starts=[start,start,start], done=[false,false,false];
-
-    function updateReel(i, now){
-      const elapsed = now - starts[i];
-      if (elapsed < durations[i]) {
-        const rand = Math.floor(Math.random()*faces.length);
-        reels[i].textContent = faces[rand];
-        if (!muted && elapsed - (reels[i]._lastTick||0) > 110){ playTick(); reels[i]._lastTick = elapsed; }
-      } else if (!done[i]) {
-        reels[i].textContent = isJackpot ? jackpotSymbol : faces[Math.floor(Math.random()*faces.length)];
-        reels[i].classList.add('stop-anim'); setTimeout(()=>reels[i].classList.remove('stop-anim'), 320);
-        done[i] = true;
-      }
-    }
-    function loop(now){
-      updateReel(0,now); updateReel(1,now); updateReel(2,now);
-      if (done[0] && done[1] && done[2]) endSpin(isJackpot, jackpotSymbol);
-      else requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
-
-    spinBtn.disabled = true;
-    resetBtn.style.display = "none";
-  }
-
-  function endSpin(isJackpot, symbol){
-    let text;
-    if (isJackpot){
-      state.jackpots++; saveState(); refreshStats();
-      text = "🎉 YOUR CAPTAIN IS ... " + symbol + " 🎉";
-      makeConfetti(); for(let i=0;i<4;i++) setTimeout(makeFirework, i*600);
-      if (!muted) playJackpot();
-    } else {
-      text = reels.map(r=>r.textContent).join(" | ");
-    }
-    resultDiv.textContent = text;
-    state.history.push({ ts: Date.now(), text }); if (state.history.length>24) state.history.shift();
-    saveState(); refreshStats();
-
-    spinBtn.disabled = false;
-    resetBtn.style.display = "inline-block";
-    spinning = false;
-  }
-
-  function resetGame(){
-    resultDiv.textContent = "";
-    reels.forEach(r=> r.textContent = "?");
-    resetBtn.style.display = "none";
-    clearEffects();
-    stopAllAudio(); // หยุดเสียงที่อาจค้าง
-  }
-
-  function refreshStats(){
-    statSpins.textContent = "Spins: " + state.spinCount;
-    statJackpots.textContent = "Jackpots: " + state.jackpots;
-    const rate = state.spinCount ? ((state.jackpots/state.spinCount)*100).toFixed(1) : "0.0";
-    statRate.textContent = "Rate: " + rate + "%";
-    statChance.textContent = "Chance: " + Math.round((state.jackpotChance||0.2)*100) + "%";
-    historyDiv.innerHTML = "";
-    state.history.slice(-8).reverse().forEach(h=>{
-      const chip = document.createElement("div");
-      chip.className = "chip";
-      chip.textContent = h.text;
-      historyDiv.appendChild(chip);
-    });
-  }
-
-  function saveImage(){ alert("Use the GitHub pack if you want image export."); }
-
-  // Init
-  loadState();
-  if (!Array.isArray(state.names) || state.names.length === 0)
-    state.names = ["Salah","Haaland","Saka","Ekitike","Bruno","Palmer"];
-  if (typeof state.jackpotChance !== "number" || isNaN(state.jackpotChance)) state.jackpotChance = 0.2;
-
-  renderInputs();
-  themeSelect.value = state.theme || "Default";
-  applyTheme(themeSelect.value);
-  refreshStats();
-  setMuted(false);
-
-  spinBtn.addEventListener("click", spin);
-  resetBtn.addEventListener("click", resetGame);
-  saveBtn.addEventListener("click", saveImage);
+  spinBtn.onclick=spin;resetBtn.onclick=resetGame;
 })();
 </script>
 
-<footer>Created by Kong DataFPL 💚 — SLLVP who is accountant, not developer</footer>
+<footer>Created by Kong DataFPL 💚 — SLLVP (accountant, not developer)</footer>
 </body>
 </html>
