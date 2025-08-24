@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FPL Slot Machine — Pro (Random)</title>
+<title>FPL Slot Machine — Pro Max(DataFPL)</title>
 <style>
   :root{ --bg1:#123524;--bg2:#0a7e6e;--accent:#00ff88;--danger:#ff4444; }
   *{box-sizing:border-box}
@@ -40,7 +40,7 @@
 <link rel="preload" href="./sounds/goal.mp3" as="audio">
 </head>
 <body>
-  <h1>🎰 FPL Slot Machine — Pro (Random)</h1>
+  <h1>🎰 FPL Slot Machine — Pro Max(DataFPL)</h1>
   <div class="sub">Weighted jackpot: starts <b>20%</b>, +<b>10%</b> each miss, resets to 20% on hit (Just for fun).</div>
 
   <div class="wrap">
@@ -59,7 +59,7 @@
         <h3>Theme & Stats</h3>
         <div class="row">
           <select id="themeSelect" title="Theme">
-            <option value="Default">Default (Green)</option>
+            <option value="Default(FPL)">Default (Green)</option>
             <option value="Arsenal">Arsenal</option>
             <option value="Liverpool">Liverpool</option>
             <option value="ManCity">Man City</option>
@@ -112,7 +112,7 @@
 
   let state = {
     spinCount: 0, jackpots: 0,
-    names: ["Salah","Haaland","Ekitike","Saka","Bruno","Palmer"],
+    names: ["Salah","Haaland","Saka","Ekitike","Bruno","Palmer"],
     theme: "Default", history: [],
     jackpotChance: 0.2 // start 20%
   };
@@ -349,15 +349,15 @@
   // Init
   loadState();
   if (!Array.isArray(state.names) || state.names.length === 0) {
-    state.names = ["Salah","Haaland","Ekitike","Saka","Bruno","Palmer"];
+    state.names = ["Salah","Haaland","Saka","Ekitike","Bruno","Palmer"];
   }
   if (typeof state.jackpotChance !== "number" || isNaN(state.jackpotChance)) state.jackpotChance = 0.2;
   renderInputs();
-  themeSelect.value = state.theme || "Default";
+  themeSelect.value = state.theme || "Default(FPL)";
   applyTheme(themeSelect.value);
   refreshStats();
   setMuted(false);
 })();</script>
-<footer>Made with 💚 — GitHub Pages ready</footer>
+<footer>Created by Kong DataFPL💚 — SLLVP Who is Accountant not Developer</footer>
 </body>
 </html>
