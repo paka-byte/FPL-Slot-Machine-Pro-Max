@@ -197,7 +197,7 @@
     jackpotChance: 0.2
   };
 
-  const reels = [document.getElementById("reel1"), "reel2", "reel3"].map(id => typeof id === 'string' ? document.getElementById(id) : id);
+  const reels = [document.getElementById("reel1"), ("reel2"), ("reel3")].map(id => typeof id === 'string' ? document.getElementById(id) : id);
   const inputsWrap = document.getElementById("inputs");
   const themeSelect = document.getElementById("themeSelect");
   const statSpins = document.getElementById("statSpins");
